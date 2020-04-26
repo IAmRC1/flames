@@ -12,4 +12,25 @@ code {
     monospace;
 }
 
+.section{
+  height: 100vh;
+  background-image: url('../images/uu.png');
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 50% 70%;
+}
+.title{
+  margin-bottom: 1rem;
+}
+.madewith{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.hero{
+  opacity: 0.6;
+}
+.hero .hero-body .container{
+  transform: skewX(-20deg);
+}
 

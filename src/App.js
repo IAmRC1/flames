@@ -1,31 +1,44 @@
 import React, { Component } from 'react'
+import love from './assets/images/love.png'
+import enemy from './assets/images/enemy.png'
+import friend from './assets/images/friends.png'
+import sister from './assets/images/sister.png'
+import marriage from './assets/images/marriage.png'
+import affection from './assets/images/affection.png'
 
 export default class App extends Component {
   state = {
     boy: "",
     girl: "",
     result: "",
-    err: false,
-    progress: 0
+    progress: 0,
+    bar: false 
   }
-  handleBoyChange = (e) => {
-    this.setState({
-      boy: e.target.value
-    })
-  }
+  handleBoyChange = (e) => {this.setState({ boy: e.target.value, bar: false, result: '', progress: 0 })}
 
-  handleGirlChange = (e) => {
-    this.setState({
-      girl: e.target.value
-    })
-  }
+  handleGirlChange = (e) => {this.setState({ girl: e.target.value, bar: false, result: '', progress: 0 })}
 
   reset = () => {
     this.setState({
       boy: "",
       girl: "",
-      result: ""
+      result: "",
+      progress: 0,
+      bar: false
     })
+  }
+
+  afterprogress = (event) => {
+    event.preventDefault();
+    this.setState({bar: true})
+    var prog = setInterval(()=>{
+      this.setState({progress: this.state.progress+1})
+      if(this.state.progress === 100){
+        clearInterval(prog)
+        this.flames()
+        this.setState({bar: false})
+      }
+    }, 15)
   }
 
   flames = () => {
@@ -48,67 +61,91 @@ export default class App extends Component {
     else if(counter === 6 || counter === 11 || counter === 15){this.setState({result: 'Marriage'})}
     else if(counter === 8 || counter === 12 || counter === 13 || counter === 17){this.setState({result: 'Affection'})}
     else if(counter === 10 || counter === 19 ){this.setState({result: 'Love'})}
-    
   }
-  
 
-  
+  colorClass = () => {
+    let res = this.state.result;
+    switch(res){
+      case 'Sister': return 'is-warning';
+      case 'Enemy': return 'is-dark';
+      case 'Friend': return 'is-primary';
+      case 'Marriage': return 'is-info';
+      case 'Affection': return 'is-link';
+      case 'Love': return 'is-danger';
+      default: return '';
+    }
+  }
 
   render() {
-    const errorBoy = () => this.state.boy.length===0? '': (this.state.boy.length<3 ? 'is-danger' : 'is-success')
-    const errorGirl = () => this.state.girl.length===0? '': (this.state.girl.length<3 ? 'is-danger' : 'is-success')
+    const { boy, girl, progress, result, bar } =this.state;
+    const errorBoy = () => boy.length===0? '': (boy.length<3 ? 'is-danger' : 'is-success')
+    const errorGirl = () => girl.length===0? '': (girl.length<3 ? 'is-danger' : 'is-success')
     return (
-      <section className="section">
+      <section className="section is-relative">
+        <a href="https://bulma.io" className="madewith">
+          <img src="https://bulma.io/images/made-with-bulma.png" alt="Made with Bulma" width="128" height="24" />
+        </a>
         <div className="columns is-mobile is-centered">
-          <div className="column is-4">
-            <h1 className="title">
-              flames game
-            </h1>
-            <div className="field">
-              <label className="label">Enter your name</label>
-              <div className="control">
-                <input 
-                  className={`input ${errorBoy()}`} 
-                  type="text" 
+          <div className="column is-6">
+            <div className="is-flex">
+              <h1 className="title">
+                flames game
+              </h1>
+              
+            </div>
+            <form onSubmit={this.afterprogress} className="title">
+              <div className="field">
+                <label className="label">Enter your first name</label>
+                <div className="control">
+                  <input 
+                    className={`input ${errorBoy()}`} 
+                    type="text" 
+                    minLength={3}
+                    maxLength={12}
+                    required
+                    placeholder="Eg: Ramesh" 
+                    value={boy} 
+                    onChange={this.handleBoyChange} />
+                </div>
+                <p className={`${boy.length===0? 'is-hidden': ((boy.length>0 && boy.length<3) ? 'help is-text-grey-light' : 'is-hidden')}`}>Name must be between 3-12 letters</p>
+              </div>
+              <div className="field">
+                <label className="label">Enter your crush's first name</label>
+                <div className="control">
+                  <input 
+                  className={`input ${errorGirl()}`} 
+                  type="text"
                   minLength={3}
-                  maxLength={12}
+                  maxLength={12} 
                   required
-                  placeholder="Eg: Ramesh" 
-                  value={this.state.boy} 
-                  onChange={this.handleBoyChange} />
+                  placeholder="Eg: Sunita" 
+                  value={girl} 
+                  onChange={this.handleGirlChange} />
+                </div>
+                <p className={`${girl.length===0? 'is-hidden': ((girl.length>0 && girl.length<3) ? 'help is-text-grey-light' : 'is-hidden')}`}>Name must be between 3-12 letters</p>
               </div>
-              {this.state.err && <p className="help is-success">Looks perfect</p>}
-            </div>
-            <div className="field">
-              <label className="label">Enter your crush's name</label>
-              <div className="control">
-                <input 
-                className={`input ${errorGirl()}`} 
-                type="text"
-                minLength={3}
-                maxLength={12} 
-                required
-                placeholder="Eg: Sunita" 
-                value={this.state.girl} 
-                onChange={this.handleGirlChange} />
+              <div className="field is-grouped">
+                <div className="control">
+                  <button className="button is-link" onClick={this.afterprogress} disabled={(!boy || !girl) || (boy === girl) || (boy.length<3 || girl.length<3)}>Submit</button>
+                </div>
+                <div className="control">
+                  <button className="button is-link is-light" onClick={this.reset} disabled={!boy || !girl}>Reset</button>
+                </div>
               </div>
-              {this.state.err && <p className="help is-danger">This name is invalid</p>}
-            </div>
-            <div className="field is-grouped">
-              <div className="control">
-                <button className="button is-link" onClick={this.flames} disabled={!this.state.boy || !this.state.girl}>Enter</button>
-              </div>
-              <div className="control">
-                <button className="button is-link is-light" onClick={this.reset}>Reset</button>
-              </div>
-            </div>
+            </form>
             <div>
-            <progress className="progress is-success" value={this.state.progress} max="100"></progress>
-            <p>{this.state.result}</p>
+              {bar && <progress className="progress is-success is-small" value={progress} max="100"></progress>}
+              {result && <section className={`hero is-bold ${this.colorClass()}`} style={{borderRadius: '0.25rem'}}>
+                  <div className="hero-body">
+                    <div className="container">
+                      <h1 className="title has-text-centered">
+                        {result}
+                      </h1>
+                    </div>
+                  </div>
+                </section>
+              }
             </div>
-            {/* <a href="https://bulma.io">
-              <img src="https://bulma.io/images/made-with-bulma.png" alt="Made with Bulma" width="128" height="24" />
-            </a> */}
           </div>
         </div>
       </section>
