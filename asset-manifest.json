@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/flames/static/css/main.fa02e475.chunk.css",
+    "main.js": "/flames/static/js/main.f31732a6.chunk.js",
+    "main.js.map": "/flames/static/js/main.f31732a6.chunk.js.map",
+    "runtime-main.js": "/flames/static/js/runtime-main.4ab32478.js",
+    "runtime-main.js.map": "/flames/static/js/runtime-main.4ab32478.js.map",
+    "static/js/2.0927ff66.chunk.js": "/flames/static/js/2.0927ff66.chunk.js",
+    "static/js/2.0927ff66.chunk.js.map": "/flames/static/js/2.0927ff66.chunk.js.map",
+    "index.html": "/flames/index.html",
+    "precache-manifest.cee016a1672ccdebebaa7bea4c7c7678.js": "/flames/precache-manifest.cee016a1672ccdebebaa7bea4c7c7678.js",
+    "service-worker.js": "/flames/service-worker.js",
+    "static/css/main.fa02e475.chunk.css.map": "/flames/static/css/main.fa02e475.chunk.css.map",
+    "static/js/2.0927ff66.chunk.js.LICENSE.txt": "/flames/static/js/2.0927ff66.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/flames/static/media/uu.a44d4890.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4ab32478.js",
+    "static/js/2.0927ff66.chunk.js",
+    "static/css/main.fa02e475.chunk.css",
+    "static/js/main.f31732a6.chunk.js"
+  ]
+}
